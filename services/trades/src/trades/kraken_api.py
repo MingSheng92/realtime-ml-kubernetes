@@ -1,7 +1,9 @@
+import json
+
+from loguru import logger
 from pydantic import BaseModel
 from websocket import create_connection
-import json
-from loguru import logger
+
 
 class Trade(BaseModel):
     product_id: str
@@ -12,13 +14,14 @@ class Trade(BaseModel):
     def to_dict(self) -> dict:
         return self.model_dump()
 
+
 class KrakenAPI:
-    # kraken api url 
-    URL:str = 'wss://ws.kraken.com/v2'
+    # kraken api url
+    URL: str = 'wss://ws.kraken.com/v2'
 
     def __init__(
         self,
-        product_ids: list[str],    
+        product_ids: list[str],
     ):
         self.product_ids = product_ids
 
@@ -27,9 +30,8 @@ class KrakenAPI:
 
         # send initial subscribe message
         self._subscribe(product_ids)
-    
+
     def get_trades(self) -> list[Trade]:
-        
         data: str = self._ws_client.recv()
 
         if 'heartbeat' in data:
@@ -48,7 +50,7 @@ class KrakenAPI:
         except KeyError as e:
             logger.error(f'No `data` field with trades in the message {e}')
             return []
-        
+
         # Method 1 to create a list of trades
         # Naive implementation
         # trades = []
@@ -73,7 +75,7 @@ class KrakenAPI:
             )
             for trade in trades_data
         ]
-        
+
         return trades
 
     def _subscribe(self, product_ids: list[str]):
