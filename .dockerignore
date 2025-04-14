@@ -1,0 +1,10 @@
+.git
+__pycache__
+*.pyc
+*.pyo
+*.md
+*.log
+tests
+notebooks
+.dockerignore
+Dockerfile

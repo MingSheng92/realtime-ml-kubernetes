@@ -27,19 +27,12 @@ def run(
 
             for event in events:
                 # 2. Serialize an event using the defined Topic
-                message = topic.serialize(
-                    # key=event["id"],
-                    value=event.to_dict()
-                )
+                message = topic.serialize(key=event.product_id, value=event.to_dict())
 
                 # 3. Produce a message into the Kafka topic
-                producer.produce(
-                    topic=topic.name,
-                    value=message.value,
-                    # key=message.key
-                )
+                producer.produce(topic=topic.name, value=message.value, key=message.key)
 
-                logger.info(f'Produced message to topic {topic.name}')
+                # logger.info(f'Produced message to topic {topic.name}')
                 logger.info(f'Trade {event.to_dict()} pushed to kafka.')
 
             # breakpoint()

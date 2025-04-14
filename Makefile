@@ -8,6 +8,9 @@ build:
 	docker build -t trades:v1.0.0 -f docker/trades.Dockerfile .
 	@echo "Build completed" 
 
+buildop:
+	docker build -t trades:v1.0.0 -f docker/trades_op.Dockerfile .
+
 deploy: build push
 	kubectl delete -f deployments/dev/trades/trades.yaml
 	kubectl apply -f deployments/dev/trades/trades.yaml
