@@ -8,14 +8,16 @@ dependencies = [
     "loguru>=0.7.3",
     "quixstreams>=3.13.1",
     "trades",
+    "candles",
     "websocket-client>=1.8.0",
 ]
 
 [tool.uv.workspace]
-members = ["services/trades"]
+members = ["services/trades", "services/candles"]
 
 [tool.uv.sources]
 trades = { workspace = true }
+candles = { workspace = true }
 
 [tool.ruff]
 line-length = 88
