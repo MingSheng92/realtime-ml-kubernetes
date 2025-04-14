@@ -1,0 +1,12 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: rwml
+  namespace: flux-system
+spec:
+  image: ghcr.io/mariusrugan/agnhost
+  interval: 2m
+  provider: generic
+  # secretRef:
+  #   name: ghcr-regcred

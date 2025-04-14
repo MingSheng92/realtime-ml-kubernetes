@@ -1,0 +1,25 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app agnhost
+  namespace: flux-system
+spec:
+  targetNamespace: rwml
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  path: ./deployments/prod/agnhost/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: rwml-c4-k8s-workloads
+    namespace: flux-system
+  # decryption:
+  #   provider: sops
+  #   secretRef:
+  #     name: sops-age
+  wait: false
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m

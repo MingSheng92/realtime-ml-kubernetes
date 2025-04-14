@@ -1,0 +1,17 @@
+#
+# https://fluxcd.io/flux/guides/image-update/#imagepolicy-examples
+#
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: rwml
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: rwml
+  filterTags:
+    pattern: '([\d\.]+)\.([\d\.]+)\.([\d\.]+)-beta\.\d+'
+  policy:
+    semver:
+      range: '>=0.1.0-beta.0'

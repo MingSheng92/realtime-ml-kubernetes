@@ -1,0 +1,28 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: agnhost
+  namespace: rwml
+  labels:
+    app.kubernetes.io/instance: agnhost
+    app.kubernetes.io/name: agnhost
+  annotations:
+    external-dns.alpha.kubernetes.io/target: external.ll-4be9.com
+    kubernetes.io/ingress.class: external
+spec:
+  ingressClassName: external
+  tls:
+    - hosts:
+        - "echo.ll-4be9.com"
+  rules:
+    - host: "echo.ll-4be9.com"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: agnhost
+                port:
+                  number: 8485
