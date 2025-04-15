@@ -10,7 +10,7 @@ What I use for this project:
 - data-streaming: kafka to load realtime crypto trade data, quixstream to load in dataframe for data transformation.
 - pre-commits: to setup precommit hooks to perform ruff linting and formatting.
 
-Note to self: Once pre-commit hook set up, docker desktop cannot commit for this repo anymore since it will not be able to trigger precommit hooks.
+Note to self: Once pre-commit hook set up, GitHub desktop cannot commit for this repo anymore since it will not be able to trigger precommit hooks.
 
 ##### architecture diagram 
 
