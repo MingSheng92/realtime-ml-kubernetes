@@ -3,11 +3,12 @@
 This repository contains my journey in learning/refresh memories on building an end to end machine learning system that predicts the cryto price in realtime. 
 
 What I use for this project: 
-dev-container: to run this project in container environment
-package-management : uv, python package mangement and project manager, written in rust and blazing fast. 
-linting & formatting: ruff 
-ochestration: kubernetes, kind for cluster management, k9s as ui, dockers
-data-streaming: kafka to load realtime crypto trade data, quixstream 
+- dev-container: to run this project in container environment
+- package-management : uv, python package mangement and project manager, written in rust and blazing fast. 
+- linting & formatting: ruff 
+- ochestration: kubernetes, kind for cluster management, k9s as ui, dockers.
+- data-streaming: kafka to load realtime crypto trade data, quixstream to load in dataframe for data transformation.
+- pre-commits: to setup precommit hooks to perform ruff linting and formatting.
 
 ##### architecture diagram 
 
