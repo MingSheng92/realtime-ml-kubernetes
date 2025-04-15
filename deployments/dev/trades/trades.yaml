@@ -18,8 +18,8 @@ spec:
       - name: trades
         image: trades:v1.0.0
         imagePullPolicy: Never # Use the local image
-        # env:
-        # - name: KAFKA_BROKER_ADDRESS
-        #   value: kafka-e11b-kafka-bootstrap.kafka.svc.cluster.local:9092
-        # - name: KAFKA_TOPIC
-        #   value: "trades
+        env:
+        - name: KAFKA_BROKER_ADDRESS
+          value: kafka-e11b-kafka-bootstrap.kafka.svc.cluster.local:9092
+        - name: KAFKA_TOPIC
+          value: "trades"
