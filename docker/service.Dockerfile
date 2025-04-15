@@ -31,8 +31,8 @@ FROM python:3.12-slim-bookworm
 WORKDIR /app
 
 # add service name as an argument
-# ARG SERVICE_NAME
-# ENV SERVICE_NAME=${SERVICE_NAME}
+ARG SERVICE_NAME
+ENV SERVICE_NAME=${SERVICE_NAME}
 
 # Create non root user for security
 RUN groupadd -r app && useradd -r -g app app
@@ -49,7 +49,7 @@ ENV PATH="/app/.venv/bin:$PATH"
 # switch to non-root user
 USER app
 
-# ENTRYPOINT ["sh", "-c", "exec python /app/services/${SERVICE_NAME}/src/${SERVICE_NAME}/main.py"]
-ENTRYPOINT ["sh", "-c", "exec python /app/services/trades/src/trades/main.py"]
+ENTRYPOINT ["sh", "-c", "exec python /app/services/${SERVICE_NAME}/src/${SERVICE_NAME}/main.py"]
+# ENTRYPOINT ["sh", "-c", "exec python /app/services/trades/src/trades/main.py"]
 CMD []
 # CMD ["uv", "run", "/app/services/trades/src/trades/main.py"]

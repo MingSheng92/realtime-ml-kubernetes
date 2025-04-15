@@ -135,10 +135,12 @@ def run(
 
 
 if __name__ == '__main__':
+    from candles.config import config
+
     run(
-        kafka_broker_address='localhost:31234',
-        kafka_input_topic='trades',
-        kafka_output_topic='candles',
-        kafka_consumer_group='candles_consumer_group',
-        candle_sec=60,
+        kafka_broker_address=config.kafka_broker_address,
+        kafka_input_topic=config.kafka_input_topic,
+        kafka_output_topic=config.kafka_output_topic,
+        kafka_consumer_group=config.kafka_consumer_group,
+        candle_sec=config.candle_sec,
     )
