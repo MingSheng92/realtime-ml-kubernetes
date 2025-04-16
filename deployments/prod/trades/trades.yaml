@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trades
+  namespace: rwml 
+  labels:
+    app: trades
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trades
+  template:
+    metadata:
+      labels:
+        app: trades
+    spec:
+      containers:
+      - name: trades
+        image: ghcr.io/mingsheng92/trades:0.1.5-beta.@sha256:c331362171d2d4b40633e84700e037be9fb404c97d3d6b15fa45b6bce73d5ef7
+        imagePullPolicy: Always # pull the latest image from the registry, disregarding the caches that kubernetes may have
+        # 
+        env:
+        - name: KAFKA_BROKER_ADDRESS
+          value: kafka-c6c8-kafka-bootstrap.strimzi.svc.cluster.local:9092
+        - name: KAFKA_TOPIC
+          value: "trades"
+        - name: DATA_SOURCE
+          value: "live"
+        # 
+        resources:
+          requests:
+            cpu: "100m"
+            mempory: "256Mi"
+          limits:
+            cpu: "1000m"
+            memory: "512Mi"
+            

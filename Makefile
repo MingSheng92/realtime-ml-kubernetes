@@ -52,7 +52,7 @@ build-push-prod: ## we use buildx to avoid any cross platform issues, and push t
 	@export ver_serial=$$(date +%s) && \
 	docker buildx build --push \
 			--platform linux/arm64 \
-			-t ghcr.io/mingsheng92/${service}:0.1.0-beta.$${ver_serial} \
+			-t ghcr.io/mingsheng92/${service}:0.1.0-beta.${ver_serial} \
 			-f docker/service.Dockerfile \
 			--build-arg SERVICE_NAME=${service} \
 			.
@@ -66,5 +66,8 @@ deploy-prod:
 	@echo "Deployment for ${service} to dev prod"
 
 
+####################################################################################
+## Linting and formatting with ruff
+####################################################################################
 lint: ## most likely wont use this because we are using pre-commit
 	ruff check . --fix
