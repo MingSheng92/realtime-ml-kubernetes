@@ -11,14 +11,16 @@ dependencies = [
     "candles",
     "websocket-client>=1.8.0",
     "pytest>=8.3.5",
+    "technical-indicators",
 ]
 
 [tool.uv.workspace]
-members = ["services/trades", "services/candles"]
+members = ["services/trades", "services/candles", "technical_indicators", "services/technical_indicators"]
 
 [tool.uv.sources]
 trades = { workspace = true }
 candles = { workspace = true }
+technical-indicators = { workspace = true }
 
 [tool.ruff]
 line-length = 88

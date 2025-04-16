@@ -6,6 +6,7 @@ requires-python = ">=3.12"
 members = [
     "candles",
     "crypto-predictor-system",
+    "technical-indicators",
     "trades",
 ]
 
@@ -223,6 +224,7 @@ dependencies = [
     { name = "loguru" },
     { name = "pytest" },
     { name = "quixstreams" },
+    { name = "technical-indicators" },
     { name = "trades" },
     { name = "websocket-client" },
 ]
@@ -233,6 +235,7 @@ requires-dist = [
     { name = "loguru", specifier = ">=0.7.3" },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "quixstreams", specifier = ">=3.13.1" },
+    { name = "technical-indicators", editable = "services/technical_indicators" },
     { name = "trades", editable = "services/trades" },
     { name = "websocket-client", specifier = ">=1.8.0" },
 ]
@@ -765,6 +768,11 @@ sdist = { url = "https://files.pythonhosted.org/packages/a2/87/a6771e1546d97e7e0
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e9/44/75a9c9421471a6c4805dbf2356f7c181a29c1879239abab1ea2cc8f38b40/sniffio-1.3.1-py3-none-any.whl", hash = "sha256:2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2", size = 10235 },
 ]
+
+[[package]]
+name = "technical-indicators"
+version = "0.1.0"
+source = { editable = "services/technical_indicators" }
 
 [[package]]
 name = "trades"
