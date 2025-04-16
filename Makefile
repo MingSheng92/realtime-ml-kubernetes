@@ -24,23 +24,47 @@ tmux-port-forward-ui: ## port forward kafka-ui in tmux
 	@echo "Port forward completed. You can access the UI at http://localhost:8182"
 
 ####################################################################################
-## dev makefile commands
+## Dev makefile commands
 ####################################################################################
 
-dev: 
+dev: # manaul run as standalone app, testing purpose
 	uv run services/${service}/src/${service}/main.py
 
-push:
+push-dev:
 	kind load docker-image ${service}:v1.0.0 --name rwml-34fa
 
-build: 
+build-dev: 
 	@echo "Building ${service} image"
 	docker build -t ${service}:v1.0.0 -f docker/service.Dockerfile --build-arg SERVICE_NAME=${service} .
 	@echo "Build complete for ${service}"
 
-deploy: build push
+deploy-dev: build push
+	@echo "Deploying ${service} to dev"
 	kubectl delete -f deployments/dev/${service}/${service}.yaml --ignore-not-found=true
 	kubectl apply -f deployments/dev/${service}/${service}.yaml 
+	@echo "Deployment for ${service} to dev done"
 
-lint: 
+####################################################################################
+## Prod makefile commands
+####################################################################################
+build-push-prod: ## we use buildx to avoid any cross platform issues, and push to github container registry
+	@echo "Building ${service} image"
+	@export ver_serial=$$(date +%s) && \
+	docker buildx build --push \
+			--platform linux/arm64 \
+			-t ghcr.io/mingsheng92/${service}:0.1.0-beta.$${ver_serial} \
+			-f docker/service.Dockerfile \
+			--build-arg SERVICE_NAME=${service} \
+			.
+	@echo "Build complete for ${service}" 
+
+
+deploy-prod:
+	@echo "Deploying ${service} to prod"
+	kubectl delete -f deployments/prod/${service}/${service}.yaml --ignore-not-found=true
+	kubectl apply -f deployments/prod/${service}/${service}.yaml 
+	@echo "Deployment for ${service} to dev prod"
+
+
+lint: ## most likely wont use this because we are using pre-commit
 	ruff check . --fix
