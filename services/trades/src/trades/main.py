@@ -1,6 +1,8 @@
 # Create an Application instance with Kafka configs
 
 
+import time
+
 from kraken_api import KrakenAPI, Trade
 from loguru import logger
 from quixstreams import Application
@@ -10,32 +12,52 @@ def run(
     kafka_broker_address: str,
     kafka_topic_name: str,
     kraken_api: KrakenAPI,
+    max_iterations: int = None,  # Parameter for testing
+    retry_interval: int = 5,
 ):
-    app = Application(
-        broker_address=kafka_broker_address,
-    )
+    try:
+        app = Application(
+            broker_address=kafka_broker_address,
+        )
 
-    # Define a topic "my_topic" with JSON serialization
-    topic = app.topic(name=kafka_topic_name, value_serializer='json')
+        # Define a topic "my_topic" with JSON serialization
+        topic = app.topic(name=kafka_topic_name, value_serializer='json')
 
-    # Create a Producer instance
-    with app.get_producer() as producer:
-        while True:
-            # 1. Fetch the event from the external API
-            events: list[Trade] = kraken_api.get_trades()
-            # event = {"id": "1", "text": "Lorem ipsum dolor sit amet"}
+        # Create a Producer instance
+        with app.get_producer() as producer:
+            while True:
+                try:
+                    # 1. Fetch the event from the external API
+                    events: list[Trade] = kraken_api.get_trades()
+                    # event = {"id": "1", "text": "Lorem ipsum dolor sit amet"}
 
-            for event in events:
-                # 2. Serialize an event using the defined Topic
-                message = topic.serialize(key=event.product_id, value=event.to_dict())
+                    for event in events:
+                        try:
+                            # 2. Serialize an event using the defined Topic
+                            message = topic.serialize(
+                                key=event.product_id, value=event.to_dict()
+                            )
 
-                # 3. Produce a message into the Kafka topic
-                producer.produce(topic=topic.name, value=message.value, key=message.key)
+                            # 3. Produce a message into the Kafka topic
+                            producer.produce(
+                                topic=topic.name, value=message.value, key=message.key
+                            )
 
-                # logger.info(f'Produced message to topic {topic.name}')
-                logger.info(f'Trade {event.to_dict()} pushed to kafka.')
+                            # logger.info(f'Produced message to topic {topic.name}')
+                            logger.info(f'Trade {event.to_dict()} pushed to kafka.')
+                        except Exception as e:
+                            logger.error(
+                                f'Error processing trade {event.product_id}: {str(e)}'
+                            )
 
-            # breakpoint()
+                except Exception as e:
+                    logger.error(f'Error fetching trades from Kraken API: {str(e)}')
+                    # wait before retry to avoid hammering the API
+                    time.sleep(retry_interval)
+
+    except Exception as e:
+        logger.critical(f'Critical error in Kafka setup: {str(e)}')
+        raise
 
 
 if __name__ == '__main__':
