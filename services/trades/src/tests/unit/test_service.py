@@ -46,13 +46,13 @@ class TestTradeService:
         # mock serialized messages
         mock_message1 = Mock()
         mock_message1.key = 'BTC-USD'
-        mock_message1.value = json.dump(
+        mock_message1.value = json.dumps(
             mock_kraken_api.get_trades.return_value[0].to_dict.return_value
         )
 
         mock_message2 = Mock()
         mock_message2.key = 'ETH-USD'
-        mock_message2.value = json.dump(
+        mock_message2.value = json.dumps(
             mock_kraken_api.get_trades.return_value[1].to_dict.return_value
         )
 
