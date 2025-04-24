@@ -2,17 +2,16 @@
 
 This repository contains my journey in learning/refresh memories on building an end to end machine learning system that predicts the cryto price in realtime. 
 
-What I use for this project: 
-- dev-container: to run this project in container environment (windows not behaving with some libraries)
-- package-management : uv, python package mangement and project manager, written in rust and blazing fast. 
-- linting & formatting: ruff 
-- Test: unit test and integration test with pytest.(WIP)
-- ochestration: kubernetes, kind for cluster management, k9s as ui, dockers.
-- data-streaming: kafka to load realtime crypto trade data, quixstream to load in dataframe for data transformation.
-- pre-commits: setup precommit hooks to perform ruff linting and formatting.
-- Risingwave: once we load and transform the data from KRAKEN api through kafka(trades, candles and technical indicators), we utilize risingwave use it as a feature store to store all hisorical data in realtime. Using it for both model monitoring and model training.
-- Monitor: With Grafana, it enable monitoring peformance of the trained ml model vs actual trades data.
-- 
+What I use for this project:
+-  Dev container: To run the project in a containerized environment (Windows has issues with some libraries).
+-  Package management: Using uv, a Python package manager and project manager written in Rust — it's blazing fast.
+- Linting & formatting: ruff for linting and code formatting.
+- Testing: Unit and integration tests using pytest (WIP).
+- Orchestration: Kubernetes for orchestration, kind for local cluster management, k9s as the UI, and Docker for containerization.
+- Data streaming: Kafka is used to stream real-time crypto trade data. quixstream loads the data into DataFrames for transformation.
+- Pre-commits: Pre-commit hooks are configured to enforce ruff linting and formatting before commits.
+- RisingWave: After ingesting and transforming data from the Kraken API (trades, candles, and technical indicators) via Kafka, we use RisingWave as a real-time feature store. It stores all historical data and supports both model training and model monitoring.
+- Monitoring: Grafana is used to monitor the performance of the trained ML model against actual trade data.
 
 <b>Note to self:</b>
 - Once pre-commit hook set up, GitHub desktop cannot commit for this repo anymore since it will not be able to trigger precommit hooks.
