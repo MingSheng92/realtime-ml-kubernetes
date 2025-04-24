@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: technical-indicators
+  labels:
+    app: technical-indicators
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: technical-indicators
+  template:
+    metadata:
+      labels:
+        app: technical-indicators
+    spec:
+      containers:
+      - name: technical-indicators
+        image: technical-indicators:v1.0.0
+        imagePullPolicy: Never # Use the local image
+        env:
+        - name: KAFKA_BROKER_ADDRESS
+          value: kafka-e11b-kafka-bootstrap.kafka.svc.cluster.local:9092
+        - name: KAFKA_INPUT_TOPIC
+          value: "candles"
+        - name: KAFKA_OUTPUT_TOPIC
+          value: "technical_indicators"
+        - name: KAFKA_CONSUMER_GROUP
+          value: "technical_indicators_group"
+        - name: CANDLE_SECONDS
+          value: "60"
+        - name: MAX_CANDLES_IN_STATE
+          value: 10
