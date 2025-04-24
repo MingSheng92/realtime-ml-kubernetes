@@ -30,4 +30,4 @@ spec:
         - name: CANDLE_SECONDS
           value: "60"
         - name: MAX_CANDLES_IN_STATE
-          value: 10
+          value: 65
