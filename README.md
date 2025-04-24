@@ -3,14 +3,21 @@
 This repository contains my journey in learning/refresh memories on building an end to end machine learning system that predicts the cryto price in realtime. 
 
 What I use for this project: 
-- dev-container: to run this project in container environment
+- dev-container: to run this project in container environment (windows not behaving with some libraries)
 - package-management : uv, python package mangement and project manager, written in rust and blazing fast. 
 - linting & formatting: ruff 
+- Test: unit test and integration test with pytest.(WIP)
 - ochestration: kubernetes, kind for cluster management, k9s as ui, dockers.
 - data-streaming: kafka to load realtime crypto trade data, quixstream to load in dataframe for data transformation.
-- pre-commits: to setup precommit hooks to perform ruff linting and formatting.
+- pre-commits: setup precommit hooks to perform ruff linting and formatting.
+- Risingwave: once we load and transform the data from KRAKEN api through kafka(trades, candles and technical indicators), we utilize risingwave use it as a feature store to store all hisorical data in realtime. Using it for both model monitoring and model training.
+- Monitor: With Grafana, it enable monitoring peformance of the trained ml model vs actual trades data.
+- 
 
-Note to self: Once pre-commit hook set up, GitHub desktop cannot commit for this repo anymore since it will not be able to trigger precommit hooks.
+<b>Note to self:</b>
+- Once pre-commit hook set up, GitHub desktop cannot commit for this repo anymore since it will not be able to trigger precommit hooks.
+- Use multistage docker build to ensure optimized docker image size.
+
 
 ##### architecture diagram 
 
@@ -35,4 +42,5 @@ uv add quixstreams
 ##### Setting up Kafka
 
 
+##### 
 to be refined.
