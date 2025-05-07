@@ -17,6 +17,18 @@ What I use for this project:
 - Once pre-commit hook set up, GitHub desktop cannot commit for this repo anymore since it will not be able to trigger precommit hooks.
 - Use multistage docker build to ensure optimized docker image size.
 
+##### Pre-requisites  
+To make sure everything can run smoothly, make sure to set up github token 
+
+Then you can create an .env.local file to setup the credentials locally for dev
+```
+export GITHUB_USER=YOUR_USERNAME
+export GITHUB_PAT=TOKEN_CREDS
+```
+Next, run the command to login to github container registry
+```
+docker login ghcr.io -u <username> -p <token>
+```
 
 ##### architecture diagram 
 
